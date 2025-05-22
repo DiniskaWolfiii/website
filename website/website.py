@@ -1,5 +1,5 @@
 import reflex as rx
-
+from website.memes import memes
 from rxconfig import config
 
 
@@ -8,38 +8,37 @@ class State(rx.State):
 
 
 def index() -> rx.Component:
-    # Welcome Page (Index)
     return rx.container(
-        rx.color_mode.button(position="top-right"),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
+        rx.box(
+            rx.heading("Awoo!", size="7"),
+            rx.heading("I'm Wolfiii🐺", size="5"),
+            rx.grid(
+                rx.card(
+                    rx.heading("Memes", size="3"),
+                    on_click=rx.redirect("/memes"),
+                    cursor="pointer",
+                    style={
+                        "transition": "all 0.2s",
+                        ":hover": {
+                            "boxShadow": "0 0 0 4px #3182ce55",
+                            "transform": "scale(1.03)",
+                        }
+                    }
+                ),
+                spacing="4",
+                columns="6",
+                width="100%",
             ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            rx.link(
-                rx.button("Pfotenclub"),
-                href="https://pfotenclub.eu",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
+            background_color="rgba(50,50,50,0.5)",
+            padding="1rem",
+            border_radius="0.5rem",
         ),
+        background="center/cover url('/image.jpg')",
+        height="100vh",
+        backdrop_filter="blur(15px)",
     )
 
 
-app = rx.App(
-    theme=rx.theme(
-        brand_color="blue",
-        font="Inter",
-        logo_url="https://reflex.dev/logo.png",
-    ),
-)
-app.add_page(index)
+app = rx.App()
+app.add_page(index, title="Home", description="Wolfiii's Web")
+app.add_page(memes, title="Memes", description="Wolfiii's Memes")
